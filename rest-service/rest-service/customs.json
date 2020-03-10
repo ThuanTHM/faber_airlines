@@ -1,0 +1,21 @@
+{
+    "elements": {},
+    "attributes": {
+        "layout:decorate": {
+            "context": "html"
+        },
+        "th:action": {},
+        "th:field": {
+            "context": "input"
+        },
+        "th:href": {
+            "context": "link"
+        },
+        "th:case": {
+            "context": "h3"
+        },
+        "layout:fragment": {
+            "context": "div"
+        }
+    }
+}

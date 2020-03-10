@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Airports</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 align="center">Flight List</h1>
+    <h2>Flights</h2>
+    <form th:action="@{/airport/add}" th:object="${orderForm}" method="post">
+        <p><select th:field="*{isReturnTrip}">
+            <option th:value=1>Return Trip</option>
+            <option th:value=0>One Way</option>
+        </select> From: <select th:field="*{departureAirport}">
+            <option th:each="airport : ${airports}" th:value="${airport}" th:text="${airport?.name + ' - ' + airport?.location}"></option>
+        </select> To: <select th:field="*{arrivalAirport}">
+            <option th:each="airport : ${airports}" th:value="${airport}" th:text="${airport?.name + ' - ' + airport?.location}"></option>
+        </select>
+            <button type="submit" class="btn btn-success"> Bay zéo cái tới nơi OvO </button>
+        </p>
+    </form>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+
+</script>
+</html>
