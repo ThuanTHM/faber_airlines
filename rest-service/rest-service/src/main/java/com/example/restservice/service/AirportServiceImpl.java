@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -31,7 +29,7 @@ public class AirportServiceImpl implements AirportService {
         if (airport.isPresent()) {
             airportRepository.deleteById(id);
         } else {
-            throw new RecordNotFoundException("No employee record exist for given id");
+            throw new RecordNotFoundException("No record exist for given id");
         }
     }
 
@@ -55,7 +53,7 @@ public class AirportServiceImpl implements AirportService {
         if (airport.isPresent()) {
             return airport.get();
         } else {
-            throw new RecordNotFoundException("No employee record exist for given id");
+            throw new RecordNotFoundException("No record exist for given id");
         }
     }
 

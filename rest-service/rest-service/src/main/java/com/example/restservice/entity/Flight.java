@@ -10,6 +10,7 @@ import java.util.Collection;
 import javax.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author FB-001
@@ -85,6 +86,7 @@ public class Flight {
     }
     
     @Basic
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "departure_time", nullable = false)
     public Date getDepartureTime() {
         return departureTime;
@@ -95,6 +97,7 @@ public class Flight {
     }
 
     @Basic
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "arrival_time", nullable = false)
     public Date getArrivalTime() {
         return arrivalTime;

@@ -1,6 +1,6 @@
 package com.example.restservice.service;
 
-import com.example.restservice.entity.Airport;
+import com.example.restservice.entity.Flight;
 import com.example.restservice.entity.Flight;
 import com.example.restservice.exception.RecordNotFoundException;
 import com.example.restservice.jpa.FlightRepository;
@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 @Service("flightService")
 public class FlightServiceImpl implements FlightService {
+
     static Logger logger = Logger.getLogger(FlightServiceImpl.class.getName());
 
     @Autowired
@@ -33,7 +34,7 @@ public class FlightServiceImpl implements FlightService {
         if (flight.isPresent()) {
             flightRepository.deleteById(id);
         } else {
-            throw new RecordNotFoundException("No employee record exist for given id");
+            throw new RecordNotFoundException("No record exist for given id");
         }
     }
 
@@ -50,7 +51,7 @@ public class FlightServiceImpl implements FlightService {
         if (flight.isPresent()) {
             return flight.get();
         } else {
-            throw new RecordNotFoundException("No employee record exist for given id");
+            throw new RecordNotFoundException("No record exist for given id");
         }
     }
 
@@ -72,5 +73,27 @@ public class FlightServiceImpl implements FlightService {
         return null;
     }
 
+    @Override
+    public Flight createOrUpdate(Flight flight) {
+        if (flight.getId() == null) {
+            flight = flightRepository.save(flight);
+            return flight;
+        } else {
+            Optional<Flight> curFilght = flightRepository.findById(flight.getId());//current data
+            if (curFilght.isPresent()) {
+                Flight newEntity = curFilght.get();
+                newEntity.setCode(flight.getCode());
+                newEntity.setArrivalAirport(flight.getArrivalAirport());
+                newEntity.setDepartureAirport(flight.getDepartureAirport());
+                newEntity.setArrivalTime(flight.getArrivalTime());
+                newEntity.setDepartureTime(flight.getDepartureTime());
+                newEntity = flightRepository.save(newEntity);
+                return newEntity;
+            } else {
+                flight = flightRepository.save(flight);
+                return flight;
+            }
+        }
+    }
 
 }

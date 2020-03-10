@@ -21,19 +21,6 @@ public class Seat {
 
     private Long id;
     private int seatRank;
-
-    public Seat(Long id, int seatRank, int availableNum, int totalNum, BigDecimal adultPrice, BigDecimal childPrice, BigDecimal infantPrice, Flight flight, Collection<Ticket> goTripTickets, Collection<Ticket> returnTripTickets) {
-        this.id = id;
-        this.seatRank = seatRank;
-        this.availableNum = availableNum;
-        this.totalNum = totalNum;
-        this.adultPrice = adultPrice;
-        this.childPrice = childPrice;
-        this.infantPrice = infantPrice;
-        this.flight = flight;
-        this.goTripTickets = goTripTickets;
-        this.returnTripTickets = returnTripTickets;
-    }
     //available seat
     private int availableNum;
     //total seat
@@ -52,6 +39,22 @@ public class Seat {
     private Collection<Ticket> goTripTickets;
     private Collection<Ticket> returnTripTickets;
 
+    public Seat(Flight flight) { 
+        this.flight = flight;
+    }
+
+    public Seat() {
+    }
+    
+    public Seat(int seatRank, int availableNum, int totalNum, BigDecimal adultPrice, BigDecimal childPrice, BigDecimal infantPrice, Flight flight) {        
+        this.seatRank = seatRank;  
+        this.availableNum = availableNum; 
+        this.totalNum = totalNum; 
+        this.adultPrice = adultPrice;
+        this.childPrice = childPrice;
+        this.infantPrice = infantPrice; 
+        this.flight = flight;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -65,7 +68,7 @@ public class Seat {
 
     //seat rank
     @Basic
-    @Column(name = "seat_rank", nullable = false)
+    @Column(name = "seat_rank", nullable = true)
     public int getSeatRank() {
         return seatRank;
     }
@@ -76,7 +79,7 @@ public class Seat {
 
     //number of available seats (= total - sold out)
     @Basic
-    @Column(name = "available_num", nullable = false)
+    @Column(name = "available_num", nullable = true)
     public int getAvailableNum() {
         return availableNum;
     }
@@ -87,7 +90,7 @@ public class Seat {
 
     //total seats
     @Basic
-    @Column(name = "total_num", nullable = false)
+    @Column(name = "total_num", nullable = true)
     public int getTotalNum() {
         return totalNum;
     }
@@ -98,7 +101,7 @@ public class Seat {
 
     //adult price
     @Basic
-    @Column(name = "adult_price", nullable = false)
+    @Column(name = "adult_price", nullable = true)
     public BigDecimal getAdultPrice() {
         return adultPrice;
     }
@@ -109,7 +112,7 @@ public class Seat {
 
     //child price
     @Basic
-    @Column(name = "child_price", nullable = false)
+    @Column(name = "child_price", nullable = true)
     public BigDecimal getChildPrice() {
         return childPrice;
     }
@@ -120,7 +123,7 @@ public class Seat {
 
     //    infant price
     @Basic
-    @Column(name = "infant_price", nullable = false)
+    @Column(name = "infant_price", nullable = true)
     public BigDecimal getInfantPrice() {
         return infantPrice;
     }

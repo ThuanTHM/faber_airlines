@@ -13,6 +13,7 @@ public interface FlightService {
     Page<Flight> findAll(PageRequest p);
     Flight create(Flight flight);
     Flight create(FlightForm flightForm);
+    Flight createOrUpdate(Flight flight);
     Flight save(Flight flight);
     void delete(Long id) throws RecordNotFoundException;
     Collection<Flight> filtering(Flight flight);

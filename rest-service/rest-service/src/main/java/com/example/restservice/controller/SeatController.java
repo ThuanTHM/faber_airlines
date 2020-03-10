@@ -1,13 +1,10 @@
 package com.example.restservice.controller;
 
 import com.example.restservice.entity.Flight;
-import com.example.restservice.entity.Seat;
 import com.example.restservice.exception.RecordNotFoundException;
-import com.example.restservice.service.AirportService;
 import com.example.restservice.service.FlightService;
 import com.example.restservice.service.SeatService;
 import com.example.restservice.viewmodel.OrderForm;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,28 +16,26 @@ import java.util.Optional;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@RequestMapping(path = {"flight", "/"})
-public class FlightController {
+@RequestMapping(path = {"seat", "/"})
+public class SeatController {
 
     @Autowired
-    private FlightService flightService;
-    @Autowired
-    private AirportService airportService;
-    @Autowired
     private SeatService seatService;
+    @Autowired
+    private FlightService flightService;
 
     @GetMapping(path = "/manage")
     public ModelAndView getAll(HttpServletRequest request) {
         int page = 0; //default page number is 0 (yes it is weird)
-        int size = 6; //default page size is 6
+        int size = 3; //default page size is 10
         if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
             page = Integer.parseInt(request.getParameter("page")) - 1;
         }
         if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
             size = Integer.parseInt(request.getParameter("size"));
         }
-        ModelAndView model = new ModelAndView("flight_manage");
-        model.addObject("flights", flightService.findAll(PageRequest.of(page, size)));
+        ModelAndView model = new ModelAndView("seat_manage");
+        model.addObject("seats", flightService.findAll(PageRequest.of(page, size)));
         return model;
     }
 
@@ -51,9 +46,8 @@ public class FlightController {
             model.addAttribute("flightDetail", flight);
         } else {
             model.addAttribute("flightDetail", new Flight(Calendar.getInstance().getTime(), Calendar.getInstance().getTime()));
+            model.addAttribute("flights", flightService.findAll());
         }
-        model.addAttribute("airports", airportService.findAll());
-        model.addAttribute("mindate", (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm")).format(Calendar.getInstance().getTime()));
         return "flight_modify";
     }
 
@@ -64,45 +58,20 @@ public class FlightController {
     }
 
     @RequestMapping(path = "/manage/create", method = RequestMethod.POST) // Map ONLY POST Requests
-    public String addFlight(@ModelAttribute Flight flightDetail) {
+    public String addNewUser(@ModelAttribute Flight flightDetail) {
         flightService.createOrUpdate(flightDetail);
         return "redirect:/flight/manage";
     }
 
-    @RequestMapping(path = {"/manage/seat/{id}"})
-    public String getAllSeats(Model model, @PathVariable("id") Optional<Long> id) throws RecordNotFoundException {
-        if (id.isPresent()) {
-            Flight flight = flightService.findById(id.get());
-            model.addAttribute("flight", flight);
-        }
-        return "flight_seat_manage";
-    }
-
-    @RequestMapping(path = {"/manage/seat/edit/{flightId}", "/manage/seat/edit/{flightId}/{id}"})
-    public String editSeat(Model model, @PathVariable("flightId") Long flightId, @PathVariable("id") Optional<Long> id) throws RecordNotFoundException {
-        if (id.isPresent()) {
-            model.addAttribute("seatDetail", seatService.findById(id.get()));
-        } else {
-            model.addAttribute("seatDetail", new Seat(flightService.findById(flightId)));
-        } 
-        return "flight_seat_modify";
-    } 
-
-    @RequestMapping(path = "/manage/seat/create", method = RequestMethod.POST) // Map ONLY POST Requests
-    public String addSeat(@ModelAttribute Seat seatDetail) { 
-        seatDetail = seatService.createOrUpdate(seatDetail);
-        return "redirect:/flight/manage/seat/" + seatDetail.getFlight().getId() + "/";
-    } 
- 
-    @RequestMapping(path = {"/manage/seat/delete/{id}"})
-    public String deleteSeat(Model model, @PathVariable("id") Long id) throws RecordNotFoundException {
-        Long flightId = seatService.findById(id).getFlight().getId();
-        seatService.delete(id);
-        return "redirect:/flight/manage/seat/" + flightId;
-    }
-
     @GetMapping(path = "/booking/search")
     public ModelAndView search() {
+//        Timestamp t = new Timestamp(System.currentTimeMillis());
+//        for(int i=0;i<100;i++){
+//            int rand = (int)(Math.random() * airports.size()) + 1;
+//            flightService.create(new Flight(
+//                    new Timestamp(t.int)(Math.random() * airports.size()))
+//            ));
+//        }
         return searchFlightPage();
     }
 
@@ -117,7 +86,7 @@ public class FlightController {
 
     public ModelAndView searchFlightPage() {
         ModelAndView model = new ModelAndView("flight_search");
-        model.addObject("airports", airportService.findAll());
+        model.addObject("flights", flightService.findAll());
         model.addObject("orderForm", new OrderForm());
         return model;
     }
