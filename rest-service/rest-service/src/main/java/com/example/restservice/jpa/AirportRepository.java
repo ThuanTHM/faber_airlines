@@ -18,9 +18,6 @@ import java.util.Collection;
  */
 
 public interface AirportRepository extends JpaRepository<Airport, Long> {
-
-    public Airport findByName(String name);
-
-    @Query("select a from Airport a where a.name LIKE :name")
-    public Collection<Airport> filtering(@Param("name") String name);
+    @Query("SELECT DISTINCT a.location FROM Airport a")
+    Collection<String> findDistinctLocations();
 }

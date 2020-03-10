@@ -16,4 +16,5 @@ public interface AirportService {
     Airport save(Airport airport);
     void delete(Long id) throws RecordNotFoundException;
     Collection<Airport> filtering(Airport airport);
+    Collection<String> findDistinctLocations();
 }

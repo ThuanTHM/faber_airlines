@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 @Service("airportService")
 public class AirportServiceImpl implements AirportService {
+
     static Logger logger = Logger.getLogger(AirportServiceImpl.class.getName());
 
     @Autowired
@@ -78,8 +79,8 @@ public class AirportServiceImpl implements AirportService {
         }
     }
 
-    public Airport findByName(String name) {
-        return airportRepository.findByName(name);
+    @Override
+    public Collection<String> findDistinctLocations() {
+        return airportRepository.findDistinctLocations(); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

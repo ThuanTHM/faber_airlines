@@ -3,7 +3,7 @@
       layout:decorate="layout">
     <head>
         <meta charset="UTF-8">
-        <title>Flight's Infomation</title>
+        <title>Flight's Information</title>
     </head>
     <body>
         <div class="container my-5" layout:fragment="content">
@@ -11,6 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="col-md-10">
+                        
                         <form action="#" th:action="@{/flight/manage/create}" th:object="${flightDetail}"
                               method="post" id='form-flight'>
                             <div class="row">
