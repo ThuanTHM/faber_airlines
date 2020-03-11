@@ -3,11 +3,13 @@ package com.example.restservice.service;
 import com.example.restservice.entity.Seat;
 import com.example.restservice.exception.RecordNotFoundException;
 import com.example.restservice.jpa.SeatRepository;
+import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page; 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -56,6 +58,7 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public Seat createOrUpdate(Seat seat) {
         if (seat.getId() == null) {
+            seat.setAvailableNum(seat.getTotalNum());
             seat = seatRepository.save(seat);
             return seat;
         } else {
@@ -76,4 +79,19 @@ public class SeatServiceImpl implements SeatService {
         }
     }
 
+    @Override
+    public Collection<Seat> findSuitableDepartingSlots(String departureLocation, String arrivalLocation, Date departureDate) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(departureDate);
+        c.add(Calendar.DATE, 1);
+        return seatRepository.findSuitableDepartingSlots(departureLocation, arrivalLocation, departureDate, c.getTime());
+    }
+
+    @Override
+    public Collection<Seat> findSuitableReturningSlots(String departureLocation, String arrivalLocation, Date returningDate) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(returningDate);
+        c.add(Calendar.DATE, 1);
+        return seatRepository.findSuitableReturningSlots(departureLocation, arrivalLocation, returningDate, c.getTime());
+    }
 }

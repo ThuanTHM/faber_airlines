@@ -5,19 +5,18 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
-    <a class="navbar-brand" href="#">Faber Universal Airlines</a>
+    <a class="navbar-brand" href="/booking">Faber Universal Airlines</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-<!--                th:classappend="${#request.requestURI === 'airport/manage/edit' } ? active : ''"-->
+            <li class="nav-item" th:classappend="${#request.requestURI == '/flight/manage' ? 'active' : ''}">                
                 <a class="nav-link" href="/flight/manage">Flight</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/airport/manage">Airport</a>
+                <a class="nav-link" th:classappend="${#request.requestURI == '/airport/manage' ? 'active' : ''}" href="/airport/manage">Airport</a>
             </li>
         </ul>
 <!--        <form class="form-inline my-2 my-lg-0">-->

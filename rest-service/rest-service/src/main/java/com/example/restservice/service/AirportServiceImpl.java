@@ -19,10 +19,6 @@ public class AirportServiceImpl implements AirportService {
     @Autowired
     private AirportRepository airportRepository;
 
-    public Airport save(Airport airport) {
-        return airportRepository.save(airport);
-    }
-
     @Override
     public void delete(Long id) throws RecordNotFoundException {
         Optional<Airport> airport = airportRepository.findById(id);

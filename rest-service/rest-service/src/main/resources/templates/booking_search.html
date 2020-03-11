@@ -5,19 +5,19 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <title>Airports</title>
+        <title>Booking - Search Flight</title>
     </head>
     <body>
         <div layout:fragment="content">
-            <div class="container ">
+            <div class="container pt-5">
                 <div class="card search-card">
                     <div class="card-body search-content">
-                        <div class="row row-spacing" ><h5 class="card-title col">Choose your flight - Hello <span th:text="${session.user}">customer</span></h5></div>
-                        <form action="#" th:action="@{/flight/search}" th:object="${orderModel}"
+                        <div class="row row-spacing" ><h5 class="card-title col">Search for suitable flights</h5></div>
+                        <form action="#" th:action="@{/booking/search}" th:object="${bookingInfo}"
                               method="post" id='form-flight-search'>
                             <div class="row row-spacing">
                                 <div class="col col-2">
-                                    <select class="form-control" th:field="*{returnType}" id="return_type">
+                                    <select class="form-control" th:field="*{roundticket}" id="return_type">
                                         <option th:value="1" >Round Trip</option>
                                         <option th:value="0">One way</option>
                                     </select>
@@ -25,37 +25,38 @@
                             </div>
                             <div class="row row-spacing">
                                 <div class="col col-4">
-                                    <label for="usr">From: </label>
+                                    <label for="departureLocation">From: </label>
                                     <div>
-                                        <select th:field="*{departureAirportId}"  class="form-control" id="departure_airport_id">
-                                            <option th:each="airport: ${airportList}" 
-                                                    th:value="${airport.id}" th:text="${airport.name + ' ('+ airport.location+')'}"></option>
+                                        <select th:field="*{departureLocation}"  class="form-control" id="depatureLocation">
+                                            <option th:each="location: ${locations}" 
+                                                    th:value="${location}" th:text="${location}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col col-4">
-                                    <label for="usr">To: </label>
+                                    <label for="arrivalLocation">To: </label>
                                     <div>
-                                        <select th:field="*{arrivalAirportId}"  class="form-control" id="arrival_airport_id">
-                                            <option th:each="airport: ${airportList}" 
-                                                    th:value="${airport.id}" th:text="${airport.name + ' ('+ airport.location+')'}"></option>
+                                        <select th:field="*{arrivalLocation}"  class="form-control" id="arrivalLocation">
+                                            <option th:each="location: ${locations}" 
+                                                    th:value="${location}" th:text="${location}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col col-4">
-                                    <label for="usr">Number of passengers: </label>
-                                    <div>
-                                        <select class="form-control" th:field="*{numOfPassengers}">
-                                            <option th:value="1">1</option>
-                                            <option th:value="2">2</option>
-                                            <option th:value="3">3</option>
-                                            <option th:value="4">4</option>
-                                            <option th:value="5">5</option>
-                                            <option th:value="6">6</option>
-                                            <option th:value="7">7</option>
-                                            <option th:value="8">8</option>
-                                            <option th:value="9">9</option>
-                                        </select>
+                                    <label>Number of passengers: </label><br/>
+                                    <div class='row'>                                        
+                                        <div class='col-4'>
+                                            <label for='numOfAdult'>Adult</label><br/>
+                                            <input type='number' min='0' class="form-control" th:field="*{numOfAdult}" id='numOfAdult'/>
+                                        </div>
+                                        <div class='col-4'>
+                                            <label for='numOfChildren'>Children</label><br/>
+                                            <input type='number' min='0' class="form-control" th:field="*{numOfChildren}" id='numOfChildren'/>
+                                        </div>
+                                        <div class='col-4'>
+                                            <label for='numOfInfant'>Infant</label><br/>
+                                            <input type='number' min='0' class="form-control" th:field="*{numOfInfant}" id='numOfInfant'/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -68,8 +69,8 @@
                                     <label for="">Return Date: </label>
                                     <input th:field="*{returnDate}" type="date" class="form-control" id="return_date" />
                                 </div>
-                                <div class="col col-4">
-                                    <button class="btn btn-primary form-control btn-search-flight" type="submit">Search flight</button>
+                                <div class="col col-4"><label></label>
+                                    <button class="btn btn-primary form-control btn-search-flight align-bottom" type="submit">Search flights</button>
                                 </div>
 
                             </div>

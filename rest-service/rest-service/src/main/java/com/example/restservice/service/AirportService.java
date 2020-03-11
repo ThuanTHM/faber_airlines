@@ -13,7 +13,6 @@ public interface AirportService {
     Page<Airport> findAll(PageRequest p);
     Airport findById(Long id) throws RecordNotFoundException;
     Airport createOrUpdate(Airport airport);
-    Airport save(Airport airport);
     void delete(Long id) throws RecordNotFoundException;
     Collection<Airport> filtering(Airport airport);
     Collection<String> findDistinctLocations();

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.Collection;
+import java.util.Date;
 
 public interface SeatService {
     Collection<Seat> findAll();
@@ -13,4 +14,6 @@ public interface SeatService {
     Seat createOrUpdate(Seat seat);
     void delete(Long id) throws RecordNotFoundException;
     Seat findById(Long id) throws RecordNotFoundException;
+    Collection<Seat> findSuitableDepartingSlots(String departureLocation, String arrivalLocation, Date departureDate);
+    Collection<Seat> findSuitableReturningSlots(String departureLocation, String arrivalLocation, Date returningDate);
 }

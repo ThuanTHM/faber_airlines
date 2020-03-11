@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author FB-001
  */
 @Entity
+@Table(name = "flight", schema = "dbexample")
 public class Flight {
     private static final long serialVersionUID = 1L;
 

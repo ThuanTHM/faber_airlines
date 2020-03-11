@@ -11,7 +11,7 @@
                 <div class="card-body pl-0 pr-0">
                     <div th:switch="${flight.seats}" class="pl-0 pr-0 ml-5 mr-5">
                         <p class="my-5">
-                            <a th:href="@{/manage/seat/edit/{flightId}(flightId = ${flight.id})}" class="btn btn-info">
+                            <a th:href="@{/flight/manage/{flightId}/seat/edit(flightId = ${flight.id})}" class="btn btn-info">
                                 <i class="fas fa-plus"> Add Seat's Info </i></a>
                         </p>
                         <!--                        end button add-->
@@ -39,7 +39,7 @@
                                             <td th:text="${item?.infantPrice  + ' (VND)'}"></td>
                                             <!--                                        end basic info-->
                                             <td>
-                                                <a th:href="@{/flight/manage/seat/edit/{flightId}/{id}(flightId=${item.flight.id}, id=${item.id})}"
+                                                <a th:href="@{/flight/manage/{flightId}/seat/edit/{id}(flightId=${item.flight.id}, id=${item.id})}"
                                                    class="btn btn-primary btn-sm">
                                                     <i class="fas fa-pencil-alt"> Edit</i>
                                                 </a>

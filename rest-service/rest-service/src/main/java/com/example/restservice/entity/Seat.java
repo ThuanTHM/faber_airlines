@@ -5,10 +5,7 @@
  */
 package com.example.restservice.entity;
 
-//import com.example.restservice.viewmodel.TargetView;
-//import com.fasterxml.jackson.annotation.JsonView;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Collection;
 import javax.persistence.*;
 
@@ -16,6 +13,7 @@ import javax.persistence.*;
  * @author FB-001
  */
 @Entity
+@Table(name = "seat", schema = "dbexample")
 public class Seat {
     private static final long serialVersionUID = 1L;
 

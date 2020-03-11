@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Booking - Search Flight</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container pt-5">
+                <div class="card search-card">
+                    <div class="card-body search-content">
+                        <form action="#" th:action="@{/booking/select/flight}" th:object="${bookingInfo}"
+                              method="post" id='form-flight-search'>
+                            <div class="row row-spacing" ><h5 class="card-title col">Select suitable departing flight</h5></div>
+                            <div class="row row-spacing">
+                                <table class="table table-striped table-responsive-md">
+                                    <tbody>
+                                        <tr th:each="item : ${departingSeats}">
+                                            <td><input type="radio" th:field="*{departingTrip}" th:value="${item}" /></td>
+                                            <td><p th:text="${item?.flight?.departureTime}"/><p th:text="${item?.flight?.departureAirport?.name + ' - ' + item?.flight?.departureAirport?.location}"/></td>
+                                            <td><i class="fas fa-plane"></i></td>
+                                            <td><p th:text="${item?.flight?.arrivalTime}"/><p th:text="${item?.flight?.arrivalAirport?.name + ' - ' + item?.flight?.arrivalAirport?.location}"/></td>
+                                            <td><p th:text="${'Adult: ' + item?.adultPrice + ' (VND)'}"/><p th:text="${'Adult: ' + item?.childPrice + ' (VND)'}"/><p th:text="${'Adult: ' + item?.infantPrice + ' (VND)'}"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                                <!--                                    end departing flight table-->
+                            </div>
+                            <div class="row row-spacing" ><h5 class="card-title col">Select suitable returning flight</h5></div>
+                            <div class="row row-spacing">
+                                <table class="table table-striped table-responsive-md">
+                                    <tbody>
+                                        <tr th:each="item : ${returningSeats}">
+                                            <td><input type="radio" th:field="*{returningTrip}" th:value="${item}" /></td>
+                                            <td><p th:text="${item?.flight?.departureTime}"/><p th:text="${item?.flight?.departureAirport?.name + ' - ' + item?.flight?.departureAirport?.location}"/></td>
+                                            <td><i class="fas fa-plane"></i></td>
+                                            <td><p th:text="${item?.flight?.arrivalTime}"/><p th:text="${item?.flight?.arrivalAirport?.name + ' - ' + item?.flight?.arrivalAirport?.location}"/></td>
+                                            <td><p th:text="${'Adult: ' + item?.adultPrice + ' (VND)'}"/><p th:text="${'Adult: ' + item?.childPrice + ' (VND)'}"/><p th:text="${'Adult: ' + item?.infantPrice + ' (VND)'}"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                                <!--                                    end returning flight table-->
+                            </div>                            
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    
+                </script>
+            </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script>
+
+    </script>
+</html>

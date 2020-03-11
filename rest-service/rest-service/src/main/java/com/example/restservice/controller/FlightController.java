@@ -19,7 +19,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@RequestMapping(path = {"flight", "/"})
+@RequestMapping(path = {"flight"})
 public class FlightController {
 
     @Autowired
@@ -65,20 +65,20 @@ public class FlightController {
 
     @RequestMapping(path = "/manage/create", method = RequestMethod.POST) // Map ONLY POST Requests
     public String addFlight(@ModelAttribute Flight flightDetail) {
-        flightService.createOrUpdate(flightDetail);
+        flightService.createOrUpdate(flightDetail); 
         return "redirect:/flight/manage";
     }
 
-    @RequestMapping(path = {"/manage/seat/{id}"})
+    @RequestMapping(path = {"/manage/{id}/seat"})
     public String getAllSeats(Model model, @PathVariable("id") Optional<Long> id) throws RecordNotFoundException {
         if (id.isPresent()) {
             Flight flight = flightService.findById(id.get());
             model.addAttribute("flight", flight);
-        }
+        } 
         return "flight_seat_manage";
     }
 
-    @RequestMapping(path = {"/manage/seat/edit/{flightId}", "/manage/seat/edit/{flightId}/{id}"})
+    @RequestMapping(path = {"/manage/{flightId}/seat/edit", "/manage/{flightId}/seat/edit/{id}"})
     public String editSeat(Model model, @PathVariable("flightId") Long flightId, @PathVariable("id") Optional<Long> id) throws RecordNotFoundException {
         if (id.isPresent()) {
             model.addAttribute("seatDetail", seatService.findById(id.get()));
@@ -91,14 +91,14 @@ public class FlightController {
     @RequestMapping(path = "/manage/seat/create", method = RequestMethod.POST) // Map ONLY POST Requests
     public String addSeat(@ModelAttribute Seat seatDetail) { 
         seatDetail = seatService.createOrUpdate(seatDetail);
-        return "redirect:/flight/manage/seat/" + seatDetail.getFlight().getId() + "/";
+        return "redirect:/flight/manage/" + seatDetail.getFlight().getId() + "/seat";
     } 
  
     @RequestMapping(path = {"/manage/seat/delete/{id}"})
     public String deleteSeat(Model model, @PathVariable("id") Long id) throws RecordNotFoundException {
         Long flightId = seatService.findById(id).getFlight().getId();
         seatService.delete(id);
-        return "redirect:/flight/manage/seat/" + flightId;
+        return "redirect:/flight/manage/" + flightId +"/seat";
     }
 
     @GetMapping(path = "/booking/search")
