@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "seat", schema = "dbexample")
 public class Seat {
+
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -37,22 +38,23 @@ public class Seat {
     private Collection<Ticket> goTripTickets;
     private Collection<Ticket> returnTripTickets;
 
-    public Seat(Flight flight) { 
+    public Seat(Flight flight) {
         this.flight = flight;
     }
 
     public Seat() {
     }
-    
-    public Seat(int seatRank, int availableNum, int totalNum, BigDecimal adultPrice, BigDecimal childPrice, BigDecimal infantPrice, Flight flight) {        
-        this.seatRank = seatRank;  
-        this.availableNum = availableNum; 
-        this.totalNum = totalNum; 
+
+    public Seat(int seatRank, int availableNum, int totalNum, BigDecimal adultPrice, BigDecimal childPrice, BigDecimal infantPrice, Flight flight) {
+        this.seatRank = seatRank;
+        this.availableNum = availableNum;
+        this.totalNum = totalNum;
         this.adultPrice = adultPrice;
         this.childPrice = childPrice;
-        this.infantPrice = infantPrice; 
+        this.infantPrice = infantPrice;
         this.flight = flight;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

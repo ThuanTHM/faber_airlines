@@ -23,18 +23,18 @@ public class BookingController {
 
     @RequestMapping(path = {"/welcome", ""})
     public ModelAndView getAll(HttpServletRequest request) {
-        ModelAndView model = new ModelAndView("booking_search"); 
+        ModelAndView model = new ModelAndView("booking_search");
         model.addObject("bookingInfo", new BookingProcessInfo());
         model.addObject("locations", airportService.findDistinctLocations());
         return model;
     }
 
     @RequestMapping(path = "/search", method = RequestMethod.POST)
-    public ModelAndView searchFlights(@ModelAttribute BookingProcessInfo bookingInfo) {  
+    public ModelAndView searchFlights(@ModelAttribute BookingProcessInfo bookingInfo) {
         ModelAndView model = new ModelAndView("booking_select_flight");
         model.addObject("departingSeats", seatService.findSuitableDepartingSlots(bookingInfo.departureLocation, bookingInfo.arrivalLocation, bookingInfo.departureDate));
         model.addObject("returningSeats", seatService.findSuitableReturningSlots(bookingInfo.arrivalLocation, bookingInfo.departureLocation, bookingInfo.returnDate));
         model.addObject("bookingInfo", bookingInfo);
-        return model; 
+        return model;
     }
 }
