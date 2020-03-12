@@ -13,11 +13,11 @@
                 <div class="card search-card">
                     <div class="card-body search-content">
                         <div class="row row-spacing" ><h5 class="card-title col">Search for suitable flights</h5></div>
-                        <form action="#" th:action="@{/booking/search}" th:object="${bookingInfo}"
+                        <form action="#" th:action="@{/booking/select/flight}" th:object="${bookingInfo}"
                               method="post" id='form-flight-search'>
                             <div class="row row-spacing">
                                 <div class="col col-2">
-                                    <select class="form-control" th:field="*{roundticket}" id="return_type">
+                                    <select class="form-control" th:field="*{order.roundticket}" id="return_type">
                                         <option th:value="1" >Round Trip</option>
                                         <option th:value="0">One way</option>
                                     </select>

@@ -3,15 +3,18 @@ package com.example.restservice.service;
 import com.example.restservice.entity.Seat;
 import com.example.restservice.exception.RecordNotFoundException;
 import com.example.restservice.jpa.SeatRepository;
+import java.util.ArrayList;
 import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page; 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 @Service("seatService")
 public class SeatServiceImpl implements SeatService {
@@ -80,18 +83,28 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public Collection<Seat> findSuitableDepartingSlots(String departureLocation, String arrivalLocation, Date departureDate) {
+    public Collection<Seat> findSuitableDepartingSlots(String departureLocation, String arrivalLocation, Date departureDate) throws UnexpectedRollbackException {
         Calendar c = Calendar.getInstance();
         c.setTime(departureDate);
         c.add(Calendar.DATE, 1);
-        return seatRepository.findSuitableDepartingSlots(departureLocation, arrivalLocation, departureDate, c.getTime());
+        try {
+            return seatRepository.findSuitableDepartingSlots(departureLocation, arrivalLocation, departureDate, c.getTime());
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ArrayList<Seat>();
+        }
     }
 
     @Override
-    public Collection<Seat> findSuitableReturningSlots(String departureLocation, String arrivalLocation, Date returningDate) {
+    public Collection<Seat> findSuitableReturningSlots(String departureLocation, String arrivalLocation, Date returningDate) throws UnexpectedRollbackException {
         Calendar c = Calendar.getInstance();
         c.setTime(returningDate);
         c.add(Calendar.DATE, 1);
-        return seatRepository.findSuitableReturningSlots(departureLocation, arrivalLocation, returningDate, c.getTime());
+        try {
+            return seatRepository.findSuitableReturningSlots(departureLocation, arrivalLocation, returningDate, c.getTime());
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ArrayList<Seat>();
+        }
     }
 }

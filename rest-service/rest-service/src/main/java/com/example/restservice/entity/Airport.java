@@ -6,6 +6,7 @@
 package com.example.restservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import java.util.ArrayList;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -21,11 +22,11 @@ public class Airport {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String name;
-    private String location;
-    private Boolean enable;
-    private Collection<Flight> departureFlights;
-    private Collection<Flight> arrivalFlights;
+    private String name = "";
+    private String location = "";
+    private Boolean enable = true;
+    private Collection<Flight> departureFlights = new ArrayList<>();
+    private Collection<Flight> arrivalFlights = new ArrayList<>();
 
 
     public Airport() {

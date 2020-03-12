@@ -1,7 +1,6 @@
 package com.example.restservice.service;
 
 import com.example.restservice.entity.Flight;
-import com.example.restservice.entity.Flight;
 import com.example.restservice.exception.RecordNotFoundException;
 import com.example.restservice.jpa.FlightRepository;
 import com.example.restservice.viewmodel.FlightForm;

@@ -25,6 +25,7 @@ public class Seat {
     //total seat
     //todo dumming for missing business's feature
     private int totalNum;//info of this field maybe moved into another entity storing Plane's info as soon as posible    
+    private BigDecimal NETPrice;
     private BigDecimal adultPrice;//temporarily input by user
     private BigDecimal childPrice;//temporarily input by user
     private BigDecimal infantPrice;//temporarily input by user
@@ -45,14 +46,13 @@ public class Seat {
     public Seat() {
     }
 
-    public Seat(int seatRank, int availableNum, int totalNum, BigDecimal adultPrice, BigDecimal childPrice, BigDecimal infantPrice, Flight flight) {
+    public Seat(int seatRank, int totalNum, BigDecimal NETPrice, BigDecimal adultPrice, BigDecimal childPrice, BigDecimal infantPrice) {
         this.seatRank = seatRank;
-        this.availableNum = availableNum;
         this.totalNum = totalNum;
+        this.NETPrice = NETPrice;
         this.adultPrice = adultPrice;
         this.childPrice = childPrice;
         this.infantPrice = infantPrice;
-        this.flight = flight;
     }
 
     @Id
@@ -97,6 +97,17 @@ public class Seat {
 
     public void setTotalNum(int totalSeat) {
         this.totalNum = totalSeat;
+    }
+
+    //NET    
+    @Basic
+    @Column(name = "net_price", nullable = true)
+    public BigDecimal getNETPrice() {
+        return NETPrice;
+    }
+
+    public void setNETPrice(BigDecimal NETPrice) {
+        this.NETPrice = NETPrice;
     }
 
     //adult price

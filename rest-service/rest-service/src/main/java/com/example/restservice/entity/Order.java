@@ -7,8 +7,9 @@ package com.example.restservice.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * @author FB-001
@@ -19,13 +20,14 @@ public class Order {
     private static final long serialVersionUID = 1L;
 
     private Long id;//order's id
-    private Timestamp orderTime;//time created of order, maybe at last modified before order being processed
-    private boolean returntrip;//return trip or not (one-way trip)
-    private String contactName;
+    private Date orderTime;//time created of order, maybe at last modified before order being processed
+    private boolean roundticket;//return trip or not (one-way trip)
+    private String contactFirstName;
+    private String contactLastName;
     private BigDecimal contactPhoneNum;
     private String contactEmail;
     private String contactAddress;
-    private Collection<Ticket> tickets;    
+    private Collection<Ticket> tickets = new ArrayList<>();    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,36 +43,45 @@ public class Order {
     //todo set nullable = false
     @Basic
     @Column(name = "order_time", nullable = true)
-    public Timestamp getOrderTime() {
+    public Date getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(Timestamp orderTime) {
+    public void setOrderTime(Date orderTime) {
         this.orderTime = orderTime;
     }
 
     //todo set nullable = false
     @Basic
-    @Column(name = "return_trip", nullable = true)
-    public boolean isReturntrip() {
-        return returntrip;
+    @Column(name = "roundticket", nullable = true)
+    public boolean isRoundticket() {
+        return roundticket;
     }
 
-    public void setReturntrip(boolean returntrip) {
-        this.returntrip = returntrip;
+    public void setRoundticket(boolean roundticket) {
+        this.roundticket = roundticket;
     }
 
     //todo set nullable = false
     @Basic
-    @Column(name = "contact_name", nullable = true)
-    public String getContactName() {
-        return contactName;
+    @Column(name = "contact_first_name", nullable = true)
+    public String getContactFirstName() {
+        return contactFirstName;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setContactFirstName(String contactFirstName) {
+        this.contactFirstName = contactFirstName;
     }
 
+    @Basic
+    @Column(name = "contact_last_name", nullable = true)
+    public String getContactLastName() {
+        return contactLastName;
+    }
+
+    public void setContactLastName(String contactLastName) {
+        this.contactLastName = contactLastName;
+    }
     //todo set nullable = false
     @Basic
     @Column(name = "contact_phone_num", nullable = true)

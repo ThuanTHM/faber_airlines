@@ -5,7 +5,6 @@
  */
 package com.example.restservice.viewmodel;
 
-import com.example.restservice.entity.Flight;
 import com.example.restservice.entity.Order;
 import com.example.restservice.entity.Seat;
 import java.util.Date;
@@ -19,15 +18,14 @@ public class BookingProcessInfo {
 
     public String departureLocation;
     public String arrivalLocation;
-    public Boolean roundticket;//return trip or not
     public int numOfAdult;
     public int numOfChildren;
     public int numOfInfant;
     public Date departureDate;
     public Date returnDate; 
-    public Seat departingTrip;
-    public Seat returningTrip;
-    public Order order;
+    public Seat departingTrip = new Seat();//departing seat id
+    public Seat returningTrip = new Seat();//returning seat id
+    public Order order = new Order();
 
     public String getDepartureLocation() {
         return departureLocation;
@@ -43,14 +41,6 @@ public class BookingProcessInfo {
 
     public void setArrivalLocation(String arrivalLocation) {
         this.arrivalLocation = arrivalLocation;
-    }
-
-    public Boolean getRoundticket() {
-        return roundticket;
-    }
-
-    public void setRoundticket(Boolean roundticket) {
-        this.roundticket = roundticket;
     }
 
     public int getNumOfAdult() {

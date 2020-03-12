@@ -5,16 +5,12 @@
  */
 package com.example.restservice.jpa;
 
-import com.example.restservice.entity.Order;
+import com.example.restservice.entity.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Collection;
-
 /**
  *
  * @author FB-001
  */
+public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
-    
 }

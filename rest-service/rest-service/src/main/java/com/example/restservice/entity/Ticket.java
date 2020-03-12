@@ -31,6 +31,16 @@ public class Ticket {
     private Order order;
     //other info such as membership, luggage extras blah blah luc bat tong tam
 
+    public Ticket(boolean roundticket, int ageRank, BigDecimal goTripPrice, BigDecimal returnTripPrice, Seat goTripSeat, Seat returnTripSeat) {
+        this.roundticket = roundticket;
+        this.ageRank = ageRank;
+        this.goTripPrice = goTripPrice;
+        this.returnTripPrice = returnTripPrice;
+        this.goTripSeat = goTripSeat;
+        this.returnTripSeat = returnTripSeat;
+    }
+
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
