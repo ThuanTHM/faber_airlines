@@ -1,11 +1,15 @@
 package com.example.restservice.service;
 
 import com.example.restservice.entity.Order;
+import com.example.restservice.exception.RecordNotFoundException;
 import com.example.restservice.jpa.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.logging.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService{
@@ -19,22 +23,36 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order delete(Order order) {
-        return null;
-    }
-
-    @Override
-    public Collection<Order> filtering(Order order) {
-        return null;
-    }
-
-    public Collection<Order> findAll(){
+    public Collection<Order> findAll() {
         return orderRepository.findAll();
     }
 
     @Override
-    public Order create(Order order) {
-        return null;
+    public Page<Order> findAll(PageRequest p) {
+        return orderRepository.findAll(p);
     }
 
+    @Override
+    public Order createOrUpdate(Order order) {
+        if (order.getId() == null) {
+            order = orderRepository.save(order);
+            return order;
+        } else {
+            Optional<Order> curOrder = orderRepository.findById(order.getId());//current data
+            if (curOrder.isPresent()) {
+                Order newEntity = curOrder.get();
+                newEntity.setContactAddress(order.getContactAddress());
+                newEntity.setContactEmail(order.getContactEmail());
+                newEntity.setContactFirstName(order.getContactFirstName());
+                newEntity.setContactLastName(order.getContactLastName());
+                newEntity.setContactPhoneNum(order.getContactPhoneNum());
+                newEntity.setPrice(order.getPrice());
+                newEntity = orderRepository.save(newEntity);
+                return newEntity;
+            } else {
+                order = orderRepository.save(order);
+                return order;
+            }
+        }
+    }
 }

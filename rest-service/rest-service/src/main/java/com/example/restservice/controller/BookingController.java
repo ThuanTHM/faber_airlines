@@ -1,12 +1,16 @@
 package com.example.restservice.controller;
 
+import com.example.restservice.entity.Order;
 import com.example.restservice.entity.Ticket;
 import com.example.restservice.exception.RecordNotFoundException;
 import com.example.restservice.service.AirportService;
 import com.example.restservice.service.FlightService;
+import com.example.restservice.service.OrderService;
 import com.example.restservice.service.SeatService;
+import com.example.restservice.service.TicketService;
 import com.example.restservice.viewmodel.BookingProcessInfo;
 import java.math.BigDecimal;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +27,10 @@ public class BookingController {
     private AirportService airportService;
     @Autowired
     private SeatService seatService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private TicketService ticketService;
 
     /**
      *
@@ -113,7 +121,7 @@ public class BookingController {
         model.addObject("bookingInfo", bookingInfo);
         return model;
     }
-    
+
     /**
      *
      * @param bookingInfo
@@ -123,6 +131,16 @@ public class BookingController {
     @RequestMapping(path = "/order/ticket", method = RequestMethod.POST)
     public ModelAndView fillingTicket(@ModelAttribute BookingProcessInfo bookingInfo) throws RecordNotFoundException {
         ModelAndView model = new ModelAndView("redirect:/");
+        Order order = orderService.createOrUpdate(new Order(new Date(), bookingInfo.isRoundticket(), bookingInfo.getContactFirstName(), bookingInfo.getContactLastName(), bookingInfo.getContactPhoneNum(), bookingInfo.getContactEmail(), bookingInfo.getContactAddress()));
+        for (Ticket ticket : bookingInfo.getAdultTickets()) {
+            ticket.setRoundticket(bookingInfo.isRoundticket());
+            ticket.setGoTripSeat(seatService.findById(bookingInfo.getDepartingTrip().getId()));
+            ticket.setReturnTripSeat(seatService.findById(bookingInfo.getDepartingTrip().getId()));
+            ticket.setGoTripPrice(ticket.getGoTripSeat().getAdultPrice());
+            ticket.setReturnTripPrice(ticket.getReturnTripSeat().getAdultPrice());
+            ticket.setAgeRank(3);
+            ticket.setRoundticket(bookingInfo.isRoundticket());
+        }
         return model;
     }
 }

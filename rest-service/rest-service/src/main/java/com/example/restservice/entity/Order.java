@@ -17,6 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = "orderinf")
 public class Order {
+
     private static final long serialVersionUID = 1L;
 
     private Long id;//order's id
@@ -24,10 +25,21 @@ public class Order {
     private boolean roundticket = true;//return trip or not (one-way trip)
     private String contactFirstName = "";
     private String contactLastName = "";
-    private BigDecimal contactPhoneNum;
+    private String contactPhoneNum;
     private String contactEmail = "";
     private String contactAddress = "";
-    private Collection<Ticket> tickets = new ArrayList<>();    
+
+    private Collection<Ticket> tickets = new ArrayList<>();
+
+    public Order(Date orderTime, boolean roundticket, String contactFirstName, String contactLastName, String contactPhoneNum, String contactEmail, String contactAddress) {
+        this.orderTime = orderTime;
+        this.roundticket = roundticket;
+        this.contactFirstName = contactFirstName;
+        this.contactLastName = contactLastName;
+        this.contactPhoneNum = contactPhoneNum;
+        this.contactEmail = contactEmail;
+        this.contactAddress = contactAddress;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,14 +94,15 @@ public class Order {
     public void setContactLastName(String contactLastName) {
         this.contactLastName = contactLastName;
     }
+
     //todo set nullable = false
     @Basic
     @Column(name = "contact_phone_num", nullable = true)
-    public BigDecimal getContactPhoneNum() {
+    public String getContactPhoneNum() {
         return contactPhoneNum;
     }
 
-    public void setContactPhoneNum(BigDecimal contactPhoneNum) {
+    public void setContactPhoneNum(String contactPhoneNum) {
         this.contactPhoneNum = contactPhoneNum;
     }
 
@@ -114,7 +127,7 @@ public class Order {
     public void setContactAddress(String contactAddress) {
         this.contactAddress = contactAddress;
     }
-    
+
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     public Collection<Ticket> getTickets() {
         return tickets;

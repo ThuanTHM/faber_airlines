@@ -65,9 +65,9 @@ public class SeatServiceImpl implements SeatService {
             seat = seatRepository.save(seat);
             return seat;
         } else {
-            Optional<Seat> curFilght = seatRepository.findById(seat.getId());//current data
-            if (curFilght.isPresent()) {
-                Seat newEntity = curFilght.get();
+            Optional<Seat> curSeat = seatRepository.findById(seat.getId());//current data
+            if (curSeat.isPresent()) {
+                Seat newEntity = curSeat.get();
                 newEntity.setSeatRank(seat.getSeatRank());
                 newEntity.setTotalNum(seat.getTotalNum());
                 newEntity.setAdultPrice(seat.getAdultPrice());
