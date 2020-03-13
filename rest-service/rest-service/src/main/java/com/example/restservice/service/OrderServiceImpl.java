@@ -46,7 +46,6 @@ public class OrderServiceImpl implements OrderService{
                 newEntity.setContactFirstName(order.getContactFirstName());
                 newEntity.setContactLastName(order.getContactLastName());
                 newEntity.setContactPhoneNum(order.getContactPhoneNum());
-                newEntity.setPrice(order.getPrice());
                 newEntity = orderRepository.save(newEntity);
                 return newEntity;
             } else {
