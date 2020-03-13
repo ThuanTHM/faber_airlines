@@ -20,13 +20,13 @@ public class Order {
     private static final long serialVersionUID = 1L;
 
     private Long id;//order's id
-    private Date orderTime;//time created of order, maybe at last modified before order being processed
-    private boolean roundticket;//return trip or not (one-way trip)
-    private String contactFirstName;
-    private String contactLastName;
+    private Date orderTime = new Date();//time created of order, maybe at last modified before order being processed
+    private boolean roundticket = true;//return trip or not (one-way trip)
+    private String contactFirstName = "";
+    private String contactLastName = "";
     private BigDecimal contactPhoneNum;
-    private String contactEmail;
-    private String contactAddress;
+    private String contactEmail = "";
+    private String contactAddress = "";
     private Collection<Ticket> tickets = new ArrayList<>();    
 
     @Id

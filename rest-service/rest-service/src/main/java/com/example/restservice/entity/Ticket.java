@@ -9,8 +9,6 @@ package com.example.restservice.entity;
 //import com.fasterxml.jackson.annotation.JsonView;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Collection;
 import javax.persistence.*;
 
 /**
@@ -30,6 +28,14 @@ public class Ticket {
     private Seat returnTripSeat;
     private Order order;
     //other info such as membership, luggage extras blah blah luc bat tong tam
+
+    public Ticket() {
+    }
+
+    public Ticket(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
 
     public Ticket(boolean roundticket, int ageRank, BigDecimal goTripPrice, BigDecimal returnTripPrice, Seat goTripSeat, Seat returnTripSeat) {
         this.roundticket = roundticket;

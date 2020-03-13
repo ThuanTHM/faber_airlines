@@ -12,34 +12,80 @@
             <div class="container pt-5" style="padding-bottom: 14rem; width: 25%; float: left">
                 <div class="card search-card">
                     <div class="card-body search-content ">
-                        <form action="#" th:action="@{/booking/order/contact}" th:object="${bookingInfo}"
+                        <form action="#" th:action="@{/booking/order/ticket}" th:object="${bookingInfo}"
                               method="post" id='form-flight-search'>             
                             <h5>Contact Information:</h5>
                             <div class="form-group row form-row border-dark">
                                 <div class="col-5 mb-1">
-                                    <input type="text" class="form-control-sm align-middle" th:field="*{order.contactFirstName}" placeholder="First name">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{contactFirstName}" placeholder="First name">
                                 </div>
                                 <div class="col-5 mb-1">
-                                    <input type="text" class="form-control-sm align-middle" th:field="*{order.contactLastName}" placeholder="Last name">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{contactLastName}" placeholder="Last name">
                                 </div>
                                 <div class="col-8 mb-1">
-                                    <input type="text" class="w-100 form-control-sm align-middle" th:field="*{order.contactPhoneNum}" placeholder="Phone Number">
+                                    <input type="text" class="w-100 form-control-sm align-middle" th:field="*{contactPhoneNum}" placeholder="Phone Number">
                                 </div>
                                 <div class="col-8 mb-1">
-                                    <input type="text" class="w-100 form-control-sm align-middle" th:field="*{order.contactEmail}" placeholder="Email">
+                                    <input type="text" class="w-100 form-control-sm align-middle" th:field="*{contactEmail}" placeholder="Email">
                                 </div>
                                 <div class="col-10">
-                                    <input type="text" class="form-control-sm align-middle w-100" th:field="*{order.contactAddress}" placeholder="Address">
+                                    <input type="text" class="form-control-sm align-middle w-100" th:field="*{contactAddress}" placeholder="Address">
                                 </div>
                             </div>
                             <h5>Customers Information:</h5>
-                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.order?.tickets}">
-                                <label class="col-2 align-middle" th:text="${(bookingInfo?.order?.tickets[__${ticketStat.index}__].ageRank==0?'Adult ':bookingInfo?.order?.tickets[__${ticketStat.index}__].ageRank==1?'Child ':'Infant ')+(ticketStat.index+1)}"></label>
+                            <!--                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.order?.tickets.?[ageRank==0]}">
+                                                            <label class="col-2 align-middle" th:text="${'Adult '+(ticketStat.index+1)}"></label>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order?.tickets[__${ticketStat.index}__].firstname}" placeholder="First name">
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.order?.tickets.?[ageRank==1]}">
+                                                            <label class="col-2 align-middle" th:text="${(bookingInfo?.order?.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].ageRank==0?'Adult ':bookingInfo?.order?.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].ageRank==1?'Child ':'Infant ')+(ticketStat.index+1)}"></label>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].firstname}" placeholder="First name">
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].lastname}" placeholder="Last name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.order?.tickets.?[ageRank==2]}">
+                                                            <label class="col-2 align-middle" th:text="${'Infant '+(ticketStat.index+1)}"></label>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult + bookingInfo?.numOfChildren}__].firstname}" placeholder="First name">
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult + bookingInfo?.numOfChildren}__].lastname}" placeholder="Last name">
+                                                            </div>
+                                                        </div>-->
+                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.adultTickets}">
+                                <label class="col-2 align-middle" th:text="${'Adult '+(ticketStat.index+1)}"></label>
                                 <div class="col-5">
-                                    <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index}__].firstname}" placeholder="First name">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{adultTickets[__${ticketStat.index}__].firstname}" placeholder="First name">
                                 </div>
                                 <div class="col-5">
-                                    <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{adultTickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
+                                </div>
+                            </div>
+                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.childrenTickets}">
+                                <label class="col-2 align-middle" th:text="${(bookingInfo?.childrenTickets[__${ticketStat.index}__].ageRank==0?'Adult ':bookingInfo?.childrenTickets[__${ticketStat.index}__].ageRank==1?'Child ':'Infant ')+(ticketStat.index+1)}"></label>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{childrenTickets[__${ticketStat.index}__].firstname}" placeholder="First name">
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{childrenTickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
+                                </div>
+                                <input type="hidden" th:field="*{childrenTickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
+                            </div>
+                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.infantTickets}">
+                                <label class="col-2 align-middle" th:text="${'Infant '+(ticketStat.index+1)}"></label>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{infantTickets[__${ticketStat.index}__].firstname}" placeholder="First name">
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{infantTickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
                                 </div>
                             </div>
                             <div class="form-group row form-row">   

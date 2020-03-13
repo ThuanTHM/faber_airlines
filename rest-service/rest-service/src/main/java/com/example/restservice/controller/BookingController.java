@@ -45,9 +45,9 @@ public class BookingController {
     @RequestMapping(path = "/select/flight", method = RequestMethod.POST)
     public ModelAndView searchFlights(@ModelAttribute BookingProcessInfo bookingInfo) {
         ModelAndView model = new ModelAndView("booking_select_flight");
-        model.addObject("departingSeats", seatService.findSuitableDepartingSlots(bookingInfo.departureLocation, bookingInfo.arrivalLocation, bookingInfo.departureDate));
-        if (bookingInfo.order.isRoundticket()) {
-            model.addObject("returningSeats", seatService.findSuitableReturningSlots(bookingInfo.arrivalLocation, bookingInfo.departureLocation, bookingInfo.returnDate));
+        model.addObject("departingSeats", seatService.findSuitableDepartingSlots(bookingInfo.getDepartureLocation(), bookingInfo.getArrivalLocation(), bookingInfo.getDepartureDate()));
+        if (bookingInfo.isRoundticket()) {
+            model.addObject("returningSeats", seatService.findSuitableReturningSlots(bookingInfo.getArrivalLocation(), bookingInfo.getDepartureLocation(), bookingInfo.getReturnDate()));
         }
         model.addObject("bookingInfo", bookingInfo);
         return model;
@@ -63,52 +63,66 @@ public class BookingController {
     public ModelAndView selectFlights(@ModelAttribute BookingProcessInfo bookingInfo) throws RecordNotFoundException {
         ModelAndView model = new ModelAndView("booking_ticket_filling");
         int i;
-        for (i = 0; i < bookingInfo.numOfAdult; i++) {//ageRank  = 0 (adult)
-            bookingInfo.order.getTickets().add(
+        bookingInfo.setDepartingTrip(seatService.findById(bookingInfo.getDepartingTrip().getId()));
+        bookingInfo.setReturningTrip(seatService.findById(bookingInfo.getReturningTrip().getId()));
+        for (i = 0; i < bookingInfo.getNumOfAdult(); i++) {//ageRank  = 0 (adult)
+            bookingInfo.getAdultTickets().add(
                     new Ticket(
-                            bookingInfo.order.isRoundticket(),
+                            bookingInfo.isRoundticket(),
                             0,
                             //                            seatService.findById(bookingInfo.getDepartingTrip()).getAdultPrice(),
                             bookingInfo.getDepartingTrip().getAdultPrice(),
                             //                            (bookingInfo.order.isRoundticket() ? seatService.findById(bookingInfo.getReturningTrip()).getAdultPrice() : BigDecimal.ZERO
-                            (bookingInfo.order.isRoundticket() ? bookingInfo.getReturningTrip().getAdultPrice() : BigDecimal.ZERO),
+                            (bookingInfo.isRoundticket() ? bookingInfo.getReturningTrip().getAdultPrice() : BigDecimal.ZERO),
                             //                            seatService.findById(bookingInfo.getDepartingTrip())
                             bookingInfo.getDepartingTrip(),
                             //                            seatService.findById(bookingInfo.getReturningTrip())
                             bookingInfo.getReturningTrip()
                     ));
         }
-        for (i = 0; i < bookingInfo.numOfChildren; i++) {//ageRank  = 1 (children) 
-            bookingInfo.order.getTickets().add(
+        for (i = 0; i < bookingInfo.getNumOfChildren(); i++) {//ageRank  = 1 (children) 
+            bookingInfo.getChildrenTickets().add(
                     new Ticket(
-                            bookingInfo.order.isRoundticket(),
+                            bookingInfo.isRoundticket(),
                             1,
                             //                            seatService.findById(bookingInfo.getDepartingTrip()).getChildPrice(),
                             bookingInfo.getDepartingTrip().getChildPrice(),
                             //                            (bookingInfo.order.isRoundticket() ? seatService.findById(bookingInfo.getReturningTrip()).getChildPrice() : BigDecimal.ZERO),
-                            (bookingInfo.order.isRoundticket() ? bookingInfo.getReturningTrip().getChildPrice() : BigDecimal.ZERO),
+                            (bookingInfo.isRoundticket() ? bookingInfo.getReturningTrip().getChildPrice() : BigDecimal.ZERO),
                             //                            seatService.findById(bookingInfo.getDepartingTrip()),
                             bookingInfo.getDepartingTrip(),
                             //                            seatService.findById(bookingInfo.getReturningTrip())
                             bookingInfo.getReturningTrip()
                     ));
         }
-        for (i = 0; i < bookingInfo.numOfInfant; i++) {//ageRank  = 0 (infant)
-            bookingInfo.order.getTickets().add(
+        for (i = 0; i < bookingInfo.getNumOfInfant(); i++) {//ageRank  = 0 (infant) 
+            bookingInfo.getInfantTickets().add(
                     new Ticket(
-                            bookingInfo.order.isRoundticket(),
+                            bookingInfo.isRoundticket(),
                             2,
                             //                            seatService.findById(bookingInfo.getDepartingTrip()).getInfantPrice(),
                             bookingInfo.getDepartingTrip().getInfantPrice(),
                             //                            (bookingInfo.order.isRoundticket() ? seatService.findById(bookingInfo.getReturningTrip()).getInfantPrice() : BigDecimal.ZERO),
-                            (bookingInfo.order.isRoundticket() ? bookingInfo.getReturningTrip().getInfantPrice() : BigDecimal.ZERO),
+                            (bookingInfo.isRoundticket() ? bookingInfo.getReturningTrip().getInfantPrice() : BigDecimal.ZERO),
                             //                            seatService.findById(bookingInfo.getDepartingTrip()),
-                            bookingInfo.getDepartingTrip(),
+                            seatService.findById(bookingInfo.getDepartingTrip().getId()),
                             //                            seatService.findById(bookingInfo.getReturningTrip())
-                            bookingInfo.getReturningTrip()
+                            seatService.findById(bookingInfo.getReturningTrip().getId())
                     ));
         }
         model.addObject("bookingInfo", bookingInfo);
+        return model;
+    }
+    
+    /**
+     *
+     * @param bookingInfo
+     * @return
+     * @throws RecordNotFoundException
+     */
+    @RequestMapping(path = "/order/ticket", method = RequestMethod.POST)
+    public ModelAndView fillingTicket(@ModelAttribute BookingProcessInfo bookingInfo) throws RecordNotFoundException {
+        ModelAndView model = new ModelAndView("redirect:/");
         return model;
     }
 }

@@ -6,6 +6,7 @@
 package com.example.restservice.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
 
@@ -19,25 +20,25 @@ public class Seat {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private int seatRank;
+    private int seatRank = 4;
     //available seat
-    private int availableNum;
+    private int availableNum = 0;
     //total seat
     //todo dumming for missing business's feature
-    private int totalNum;//info of this field maybe moved into another entity storing Plane's info as soon as posible    
-    private BigDecimal NETPrice;
-    private BigDecimal adultPrice;//temporarily input by user
-    private BigDecimal childPrice;//temporarily input by user
-    private BigDecimal infantPrice;//temporarily input by user
+    private int totalNum = 0;//info of this field maybe moved into another entity storing Plane's info as soon as posible    
+    private BigDecimal NETPrice = BigDecimal.ZERO;
+    private BigDecimal adultPrice = BigDecimal.ZERO;//temporarily input by user
+    private BigDecimal childPrice = BigDecimal.ZERO;//temporarily input by user
+    private BigDecimal infantPrice = BigDecimal.ZERO;//temporarily input by user
     //    price for 3 different age ranks depends on these infomations and based on algorithm which may be cover as soon as possibledeparture:
     // -NET seat price
     // -system & admin fee
     // -domestic passenger service charge depend on international/ national flight
     // -domestic itineries: (including VAT 10%) for adult depending on airport. Children from 2 to under 12 years pay 50% applicable adult rate. Infants under 2 years without seats are exempt.
     // (VAT: regularly by 10% of NET seat price + dps)
-    private Flight flight;
-    private Collection<Ticket> goTripTickets;
-    private Collection<Ticket> returnTripTickets;
+    private Flight flight = new Flight();
+    private Collection<Ticket> goTripTickets = new ArrayList<>();
+    private Collection<Ticket> returnTripTickets = new ArrayList<>();
 
     public Seat(Flight flight) {
         this.flight = flight;
